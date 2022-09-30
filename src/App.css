@@ -2,7 +2,6 @@
   display:grid;
   grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
   grid-gap:2rem 1rem;
-  
 }
 img{
   width:100%;
@@ -10,10 +9,14 @@ img{
   object-fit: cover;
   border-radius: 1rem;
   margin-bottom:1rem
-
 }
 h2{
   font-size: 0.8rem;
+}
+.filter-container{
+  display: flex;
+  font-display: row;
+  justify-content: center;
 }
 .filter-container button{
   margin-right: 2rem;
@@ -32,3 +35,20 @@ button.active{
   color:white;
   
 }
+@media screen and (max-width: 1024px){
+  .container{
+    width: 80vw;
+}
+  .filter-container{
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+  .filter-container button{
+      min-width: 0.5rem;
+      
+  }
+}
+  
