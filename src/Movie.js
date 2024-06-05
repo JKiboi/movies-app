@@ -14,7 +14,7 @@ const Movie = ({ movie }) => {
         />
         <p>{movie.overview}</p>
         <div className="rating">
-          <img src={rating} alt="" styles={{ width: "5px", height: "5px" }} />
+          <img src={rating} alt="Rating" className="rating-icon" />
           <p>{movie.vote_average}</p>
         </div>
       </motion.div>
