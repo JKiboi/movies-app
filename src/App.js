@@ -3,6 +3,8 @@ import Movie from './Movie';
 import Filter from './Filter';
 import SearchBar from './SearchBar';
 import TrendingSection from './TrendingSection';
+import UpcomingMovies from './UpcomingMovies';
+import MovieDetail from './MovieDetail';
 import { motion, AnimatePresence } from 'framer-motion';
 import './styles.css';
 
@@ -16,6 +18,9 @@ function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+  const [releaseYearFilter, setReleaseYearFilter] = useState('');
+  const [minRatingFilter, setMinRatingFilter] = useState('');
 
   useEffect(() => {
     fetchPopular();
@@ -47,6 +52,37 @@ function App() {
     setPage(prev => prev + 1);
   };
 
+    useEffect(() => {
+        let filteredMovies = [...popular];
+    
+        if (activeGenre !== 0) {
+          filteredMovies = filteredMovies.filter(movie =>
+            movie.genre_ids.includes(activeGenre)
+          );
+        }
+    
+        if (releaseYearFilter) {
+          filteredMovies = filteredMovies.filter(movie =>
+            new Date(movie.release_date).getFullYear().toString() === releaseYearFilter
+          );
+        }
+        if(minRatingFilter){
+          filteredMovies = filteredMovies.filter(movie =>
+            movie.vote_average >= parseFloat(minRatingFilter)
+          );
+        }
+    
+        setFiltered(filteredMovies);
+      }, [popular, activeGenre, releaseYearFilter, minRatingFilter]);
+
+  const handleMovieClick = (movieId) => {
+    setSelectedMovieId(movieId);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMovieId(null);
+  };
+
   return (
     <div className="app">
       <header className="header">
@@ -60,21 +96,32 @@ function App() {
       />
       
       {!isSearching && <TrendingSection />}
+      
+      {!isSearching && <UpcomingMovies />}
+
 
       <Filter 
         popular={popular} 
         setFiltered={setFiltered} 
         activeGenre={activeGenre} 
         setActiveGenre={setActiveGenre}
+        releaseYearFilter={releaseYearFilter}
+        setReleaseYearFilter={setReleaseYearFilter}
+        minRatingFilter={minRatingFilter}
+        setMinRatingFilter={setMinRatingFilter}
       />
       
       <AnimatePresence>
         <motion.div layout className="movies-grid">
           {(isSearching ? searchResults : filtered).map(movie => (
-            <Movie key={movie.id} movie={movie} />
+            <Movie key={movie.id} movie={movie} onMovieClick={handleMovieClick} />
           ))}
         </motion.div>
       </AnimatePresence>
+        
+      {selectedMovieId && (
+        <MovieDetail movieId={selectedMovieId} onClose={handleCloseModal} />
+      )}
 
       {!isSearching && hasMore && (
         <div className="load-more">
