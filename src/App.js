@@ -86,7 +86,7 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>MovieVerse</h1>
+        <h1>MovieNights</h1>
         <p>Discover your next favorite movie</p>
       </header>
 
