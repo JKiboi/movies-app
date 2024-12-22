@@ -6,7 +6,7 @@
     --card-background: #2d2d2d;
     --transition-speed: 0.3s;
   }
-  
+
   body {
     margin: 0;
     font-family: 'Inter', sans-serif;
@@ -14,58 +14,60 @@
     color: var(--text-color);
     line-height: 1.6;
   }
-  
+
   .app {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 1rem; /* Reduced padding for smaller screens */
+    padding: 1rem; /* Reduced padding on smaller screens */
   }
-  
+
   .header {
     text-align: center;
     margin-bottom: 2rem; /* Reduced margin for smaller screens */
   }
-  
+
   .header h1 {
-    font-size: 2rem; /* Reduced font size for smaller screens */
+    font-size: 2.5rem; /* Reduced font size for smaller screens */
     margin: 0;
     background: linear-gradient(45deg, var(--secondary-color), #f39c12);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  
+
   .header p {
     color: #666;
     font-size: 1rem; /* Reduced font size for smaller screens */
   }
-  
+
+    /* ----- General Grid for Movies ----- */
   .movies-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust column width for smaller screens */
-      gap: 1rem;
-      padding: 0.5rem;
-    }
-  
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Smaller minimum size */
+    gap: 1rem; /* Reduced gap for smaller screens */
+    padding: 0.5rem; /* Reduced padding for smaller screens */
+  }
+
   .movie-card {
     background: var(--card-background);
-    border-radius: 10px; /* Slightly reduced border radius */
+    border-radius: 15px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Reduced box shadow */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Reduced shadow for smaller screens */
   }
-  
+
   .movie-image-container {
     position: relative;
     overflow: hidden;
   }
-  
+
+    /* ----- Movie Image Handling ----- */
   .movie-image {
     width: 100%;
     height: 180px; /* Reduced height for smaller screens */
     object-fit: cover;
     transition: transform var(--transition-speed);
   }
-  
+
   .movie-overlay {
     position: absolute;
     top: 0;
@@ -79,119 +81,123 @@
     opacity: 0;
     transition: opacity var(--transition-speed);
   }
-  
+
+    /* ----- Movie Card Hover Effects ----- */
   .movie-card:hover .movie-overlay {
     opacity: 1;
   }
-  
+
   .movie-card:hover .movie-image {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
-  
+
   .expand-button {
     background: var(--secondary-color);
     border: none;
     color: white;
-    padding: 0.4rem; /* Reduced padding for smaller screens */
+    padding: 0.4rem; /* Slightly reduced padding for mobile */
     border-radius: 50%;
     cursor: pointer;
     transition: transform var(--transition-speed);
   }
-  
+
+    /* ----- Expand Button Hover Effect ----- */
   .expand-button:hover {
     transform: scale(1.1);
   }
-  
+
   .movie-info {
     padding: 0.75rem; /* Reduced padding for smaller screens */
   }
-  
+
   .movie-info h2 {
     margin: 0;
-    font-size: 1rem; /* Reduced font size for smaller screens */
+    font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+
   .rating {
     display: flex;
     align-items: center;
     gap: 0.3rem; /* Reduced gap for smaller screens */
     margin-top: 0.3rem; /* Reduced margin for smaller screens */
   }
-  
+
   .star-icon {
     color: #f39c12;
+        font-size: 0.8rem;
   }
-  
+
   .movie-details {
     padding: 0.75rem; /* Reduced padding for smaller screens */
     background: rgba(0, 0, 0, 0.2);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .additional-info {
     display: flex;
     justify-content: space-between;
     margin-top: 0.75rem; /* Reduced margin for smaller screens */
-    font-size: 0.8rem; /* Reduced font size for smaller screens */
+    font-size: 0.75rem; /* Reduced font size for smaller screens */
     color: #666;
   }
-  
+
+    /* ----- Filter Section ----- */
   .filter-section {
-    margin-bottom: 1.5rem; /* Reduced margin for smaller screens */
+      margin-bottom: 1.5rem; /* Reduced margin for smaller screens */
   }
-  
+
+    /* ----- Filter Container ----- */
   .filter-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem; /* Reduced gap for smaller screens */
     padding: 0.5rem; /* Reduced padding for smaller screens */
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
-  
+
+    /* ----- Filter Inputs ----- */
   .filter-inputs {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem; /* Reduced gap for smaller screens */
-      margin-top: 0.75rem; /* Reduced margin for smaller screens */
-    }
-    
-  .filter-input {
-      padding: 0.5rem 0.75rem; /* Reduced padding for smaller screens */
-      border-radius: 20px; /* Reduced border radius */
-      background: var(--card-background);
-      color: var(--text-color);
-      border:none;
-      font-size: 0.9rem; /* Reduced font size for smaller screens */
-      max-width: 120px; /* Reduced max-width */
-      flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem; /* Reduced gap for smaller screens */
+    margin-top: 0.5rem; /* Reduced margin for smaller screens */
   }
-  
+
+  .filter-input {
+    padding: 0.6rem 0.75rem; /* Reduced padding for mobile */
+    border-radius: 20px; /* Reduced border radius for mobile */
+      background: var(--card-background);
+    color: var(--text-color);
+    border: none;
+    font-size: 0.8rem; /* Reduced font size for mobile */
+    max-width: 120px; /* Reduced max width for mobile */
+  }
+
+    /* ----- Filter Buttons ----- */
   .filter-container button {
     background: var(--card-background);
     color: var(--text-color);
     border: none;
-    padding: 0.6rem 1rem; /* Reduced padding for smaller screens */
-    border-radius: 20px; /* Reduced border radius */
+    padding: 0.5rem 1rem; /* Reduced padding for mobile */
+    border-radius: 20px; /* Reduced border radius for mobile */
     cursor: pointer;
     transition: all var(--transition-speed);
     font-weight: 500;
-    flex-shrink: 0;
+    font-size: 0.8rem; /* Reduced font size for mobile */
   }
-  
+
   .filter-container button:hover {
     background: var(--secondary-color);
   }
-  
+
   .filter-container button.active {
     background: var(--secondary-color);
-    box-shadow: 0 0 10px rgba(231, 76, 60, 0.3); /* Reduced box shadow */
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
   }
-  
+
   .loader {
     display: flex;
     justify-content: center;
@@ -200,58 +206,61 @@
     font-size: 1.2rem; /* Reduced font size for smaller screens */
     color: var(--secondary-color);
   }
-  
+
   .error {
     text-align: center;
     color: var(--secondary-color);
     padding: 1rem; /* Reduced padding for smaller screens */
   }
-  
+
+    /* ----- Search Container ----- */
   .search-container {
     position: relative;
-    max-width: 90%; /* Use % for better responsiveness */
+    max-width: 500px; /* Reduced max width for smaller screens */
     margin: 0 auto 1.5rem; /* Reduced margin for smaller screens */
   }
-  
+
   .search-input {
     width: 100%;
-    padding: 0.75rem 0.75rem 0.75rem 2.5rem; /* Reduced padding for smaller screens */
+    padding: 0.8rem 0.8rem 0.8rem 2.5rem; /* Adjusted padding for mobile */
     border: none;
-    border-radius: 20px; /* Reduced border radius */
-    background: var(--card-background);
+    border-radius: 20px; /* Reduced border radius for mobile */
+      background: var(--card-background);
     color: var(--text-color);
-    font-size: 0.9rem; /* Reduced font size for smaller screens */
+    font-size: 0.9rem; /* Reduced font size for mobile */
   }
-  
+
   .search-icon {
     position: absolute;
-    left: 0.75rem; /* Reduced left position for smaller screens */
+    left: 0.8rem; /* Adjusted left for mobile */
     top: 50%;
     transform: translateY(-50%);
     color: #666;
   }
-  
-  .trending-section {
-    margin-bottom: 1.5rem; /* Reduced margin for smaller screens */
-    padding: 0.75rem; /* Reduced padding for smaller screens */
+
+    /* ----- Trending Section ----- */
+    .trending-section {
+    margin-bottom: 1.5rem; /* Reduced margin for mobile */
+    padding: 0.8rem; /* Reduced padding for mobile */
     background: var(--card-background);
-    border-radius: 10px; /* Reduced border radius */
+    border-radius: 10px;
   }
   
   .trending-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.75rem; /* Reduced margin for smaller screens */
+    margin-bottom: 0.8rem; /* Reduced margin for mobile */
   }
   
   .trending-toggle button {
     background: none;
     border: none;
     color: var(--text-color);
-    padding: 0.4rem 0.8rem; /* Reduced padding for smaller screens */
+    padding: 0.3rem 0.75rem; /* Reduced padding for mobile */
     cursor: pointer;
     opacity: 0.7;
+    font-size: 0.8rem; /* Reduced font size for mobile */
   }
   
   .trending-toggle button.active {
@@ -261,68 +270,72 @@
   
   .trending-movies {
     display: flex;
-    gap: 0.5rem; /* Reduced gap for smaller screens */
+    gap: 0.8rem; /* Reduced gap for mobile */
     overflow-x: auto;
-    padding: 0.5rem 0; /* Reduced padding for smaller screens */
+    padding: 0.8rem 0; /* Reduced padding for mobile */
   }
   
   .trending-movie {
     flex: 0 0 auto;
-    width: 120px; /* Reduced width for smaller screens */
+    width: 120px; /* Reduced width for mobile */
     cursor: pointer;
   }
   
   .trending-movie img {
     width: 100%;
-    height: 180px; /* Reduced height for smaller screens */
+    height: 170px; /* Reduced height for mobile */
     object-fit: cover;
-    border-radius: 8px; /* Reduced border radius */
+    border-radius: 8px;
   }
   
   .trending-movie-info {
-    padding: 0.4rem; /* Reduced padding for smaller screens */
+      padding: 0.3rem; /* Reduced padding for mobile */
   }
   
   .trending-movie-info h3 {
     margin: 0;
-    font-size: 0.8rem; /* Reduced font size for smaller screens */
+    font-size: 0.8rem; /* Reduced font size for mobile */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   
   .trending-movie-info p {
-    margin: 0.2rem 0 0; /* Reduced margin for smaller screens */
-    font-size: 0.7rem; /* Reduced font size for smaller screens */
+    margin: 0.15rem 0 0; /* Reduced margin for mobile */
+    font-size: 0.7rem; /* Reduced font size for mobile */
     color: #666;
   }
-  
+
+
+    /* ----- Load More Button ----- */
   .load-more {
     text-align: center;
     margin: 1.5rem 0; /* Reduced margin for smaller screens */
   }
-  
+
   .load-more button {
     background: var(--secondary-color);
     color: white;
     border: none;
-    padding: 0.6rem 1.5rem; /* Reduced padding for smaller screens */
-    border-radius: 20px; /* Reduced border radius */
+    padding: 0.6rem 1.5rem; /* Reduced padding for mobile */
+    border-radius: 20px; /* Reduced border radius for mobile */
     cursor: pointer;
     font-weight: 500;
     transition: transform var(--transition-speed);
+        font-size: 0.9rem; /* Reduced font size for mobile */
   }
-  
+
   .load-more button:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
-  
+
   .load-more button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
   }
-  
-  
+
+
+    /* ----- Movie Detail Modal ----- */
   .movie-detail-modal {
     position: fixed;
     top: 0;
@@ -333,36 +346,36 @@
     z-index: 1000;
     overflow-y: auto;
   }
-  
+
   .modal-content {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 100%;
+      margin: 0;
     background: var(--background-color);
     position: relative;
   }
-  
+
   .close-button {
     position: absolute;
-    top: 0.75rem; /* Reduced top for smaller screens */
-    right: 0.75rem; /* Reduced right for smaller screens */
+    top: 0.75rem; /* Adjusted for mobile */
+    right: 0.75rem; /* Adjusted for mobile */
     background: rgba(0, 0, 0, 0.5);
     border: none;
     color: white;
-    padding: 0.4rem; /* Reduced padding for smaller screens */
+    padding: 0.4rem; /* Adjusted for mobile */
     border-radius: 50%;
     cursor: pointer;
     z-index: 2;
   }
-  
+
   .movie-detail-hero {
-      height: 40vh; /* Reduced height for smaller screens */
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-    }
-  
+    height: 40vh; /* Reduced height for mobile */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+  }
+
   .movie-detail-hero::before {
     content: '';
     position: absolute;
@@ -372,54 +385,66 @@
     bottom: 0;
     background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
   }
-  
+
   .hero-content {
-    padding: 1.5rem; /* Reduced padding for smaller screens */
+    padding: 1rem; /* Reduced padding for mobile */
     position: relative;
     width: 100%;
   }
-  
+
   .play-trailer {
     background: var(--secondary-color);
     border: none;
     color: white;
-    padding: 0.6rem 1.2rem; /* Reduced padding for smaller screens */
-    border-radius: 20px; /* Reduced border radius */
+      padding: 0.6rem 1rem; /* Reduced padding for mobile */
+    border-radius: 20px; /* Reduced border radius for mobile */
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.4rem; /* Reduced gap for smaller screens */
-    margin-top: 0.75rem; /* Reduced margin for smaller screens */
-      font-size: 0.9rem;/* Reduced font size for smaller screens */
+    gap: 0.3rem; /* Reduced gap for mobile */
+    margin-top: 0.7rem; /* Reduced margin for mobile */
   }
-  
+    .movie-stats {
+    display: flex;
+    flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+    padding-left: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .movie-stats span {
+    background: rgba(255, 255, 255, 0.05);
+      padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+  }
+
   .movie-detail-tabs {
     display: flex;
-    gap: 0.5rem; /* Reduced gap for smaller screens */
-    margin: 1.5rem 0; /* Reduced margin for smaller screens */
+    gap: 0.5rem; /* Reduced gap for mobile */
+    margin: 1rem 0; /* Reduced margin for mobile */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0 1rem; /* Reduced padding for smaller screens */
-      overflow-x: auto; /* Enable horizontal scrolling */
-      -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
-      justify-content: flex-start; /* Align tabs to start on small screens*/
+    padding: 0 0.5rem; /* Reduced padding for mobile */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Enables momentum scrolling on iOS */
   }
-  
+
   .movie-detail-tabs button {
     background: none;
     border: none;
     color: var(--text-color);
-    padding: 0.75rem; /* Reduced padding for smaller screens */
-      font-size: 0.9rem; /* Reduced font size for smaller screens */
+    padding: 0.7rem; /* Reduced padding for mobile */
     cursor: pointer;
     opacity: 0.7;
     position: relative;
-    flex-shrink: 0;
+    white-space: nowrap;
+      font-size: 0.8rem; /* Reduced font size for mobile */
   }
-  
+
   .movie-detail-tabs button.active {
     opacity: 1;
   }
-  
+
   .movie-detail-tabs button.active::after {
     content: '';
     position: absolute;
@@ -429,57 +454,70 @@
     height: 2px;
     background: var(--secondary-color);
   }
-  
+
   .tab-content {
-    padding: 1rem; /* Reduced padding for smaller screens */
+    padding: 0.5rem; /* Reduced padding for mobile */
   }
-  
+
   .cast-tab {
     display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Adjust column width for smaller screens */
-    gap: 0.75rem; /* Reduced gap for smaller screens */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Smaller min width for mobile */
+    gap: 0.5rem; /* Reduced gap for mobile */
   }
-  
+
   .cast-member {
     text-align: center;
   }
-  
+
   .cast-member img {
-      width: 120px; /* Reduced width for smaller screens */
-      height: 180px; /* Reduced height for smaller screens */
+    width: 100px; /* Reduced width for mobile */
+    height: 150px; /* Reduced height for mobile */
     object-fit: cover;
-    border-radius: 8px; /* Reduced border radius */
+    border-radius: 8px;
   }
-  
+
   .reviews-tab {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem; /* Reduced gap for smaller screens */
+    gap: 1rem; /* Reduced gap for mobile */
   }
-  
+
   .review {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.75rem; /* Reduced padding for smaller screens */
-    border-radius: 8px; /* Reduced border radius */
+      background: rgba(255, 255, 255, 0.05);
+    padding: 0.7rem; /* Reduced padding for mobile */
+    border-radius: 8px;
+      font-size: 0.75rem; /* Reduced font size for mobile */
   }
+
+    .review-header h3 {
+      font-size: 1rem;
+        margin-bottom: 0.2rem
+    }
   
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+        align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
   .similar-tab {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust column width for smaller screens */
-    gap: 0.75rem; /* Reduced gap for smaller screens */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller min width for mobile */
+    gap: 0.5rem; /* Reduced gap for mobile */
   }
-  
+
   .similar-movie {
     cursor: pointer;
   }
-  
+
   .similar-movie img {
     width: 100%;
-      height: 220px; /* Reduced height for smaller screens */
+    height: 200px; /* Reduced height for mobile */
     object-fit: cover;
-    border-radius: 8px; /* Reduced border radius */
+    border-radius: 8px;
   }
-  
+
   .trailer-modal {
     position: fixed;
     top: 0;
@@ -492,14 +530,15 @@
     justify-content: center;
     z-index: 2000;
   }
-  
+
+    /* ----- Trailer Content ----- */
   .trailer-content {
-    width: 90%; /* Use % for better responsiveness */
-    height: 0;
-    padding-bottom: 50.625%; /* 16:9 aspect ratio */
+    width: 90%; /* Adjusted width for mobile */
+      height: 0;
+    padding-bottom: 50.625%;
     position: relative;
   }
-  
+
   .trailer-content iframe {
     position: absolute;
     top: 0;
@@ -507,46 +546,248 @@
     width: 100%;
     height: 100%;
   }
-  
+
+      /* ----- Upcoming Movies Section ----- */
   .upcoming-section {
-    margin: 1.5rem 0; /* Reduced margin for smaller screens */
-    padding: 0.75rem; /* Reduced padding for smaller screens */
+    margin: 1.5rem 0; /* Reduced margin for mobile */
+    padding: 0.8rem; /* Reduced padding for mobile */
   }
   
   .upcoming-movies {
     display: flex;
-    gap: 0.5rem; /* Reduced gap for smaller screens */
+    gap: 0.8rem; /* Reduced gap for mobile */
     overflow-x: auto;
-    padding: 0.5rem 0; /* Reduced padding for smaller screens */
+    padding: 0.8rem 0; /* Reduced padding for mobile */
   }
   
   .upcoming-movie {
     flex: 0 0 auto;
-    width: 150px; /* Reduced width for smaller screens */
+      width: 150px; /* Reduced width for mobile */
     position: relative;
   }
   
   .upcoming-date {
     position: absolute;
-    top: 0.75rem; /* Reduced top for smaller screens */
-    right: 0.75rem; /* Reduced right for smaller screens */
+    top: 0.5rem; /* Adjusted position for mobile */
+    right: 0.5rem; /* Adjusted position for mobile */
     background: rgba(0, 0, 0, 0.7);
-    padding: 0.3rem; /* Reduced padding for smaller screens */
-    border-radius: 4px; /* Reduced border radius */
-    font-size: 0.7rem; /* Reduced font size for smaller screens */
+    padding: 0.3rem; /* Reduced padding for mobile */
+    border-radius: 5px;
+    font-size: 0.65rem; /* Reduced font size for mobile */
   }
-  
-  
-  
-  @media (max-width: 768px) {
+
+
+  @media (min-width: 768px) {
       .app {
-          padding: 0.75rem; /* Further reduced padding on small screens*/
+          padding: 2rem;
+        }
+    
+        .header {
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+          font-size: 3rem;
+        }
+          
+        .header p {
+          font-size: 1.2rem;
+        }
+
+    .movies-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+          padding: 1rem;
+    }
+
+    .movie-image {
+        height: 200px;
+    }
+      
+    .movie-info {
+          padding: 1rem;
+    }
+          
+    .movie-info h2 {
+          font-size: 1.2rem;
+    }
+
+    .rating {
+          gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+          
+    .star-icon{
+        font-size: 1rem;
+    }
+      
+      .additional-info {
+          margin-top: 1rem;
+        font-size: 0.9rem;
       }
+      
+      .filter-section {
+            margin-bottom: 2rem;
+      }
+      
+    .filter-container {
+          gap: 1rem;
+        padding: 1rem;
+    }
+
+    .filter-input {
+        padding: 0.75rem 1rem;
+        border-radius: 25px;
+        font-size: 1rem;
+        max-width: 150px;
+      }
+      
+    .filter-inputs {
+          gap: 1rem;
+        margin-top: 1rem;
+    }
+      
+    .filter-container button {
+          padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+          font-size: 1rem;
+    }
+
+    .search-container {
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+      
+    .search-input {
+        padding: 1rem 1rem 1rem 3rem;
+        border-radius: 25px;
+        font-size: 1rem;
+      }
+          
+    .search-icon {
+        left: 1rem;
+      }
+      
+    .trending-section {
+          margin-bottom: 2rem;
+        padding: 1rem;
+          border-radius: 15px;
+    }
+
+    .trending-header {
+          margin-bottom: 1rem;
+    }
+
+    .trending-toggle button {
+        padding: 0.5rem 1rem;
+          font-size: 1rem;
+    }
+      
+    .trending-movies {
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+      
+    .trending-movie {
+        width: 150px;
+    }
+      
+    .trending-movie img {
+          height: 225px;
+      }
+      
+    .trending-movie-info h3 {
+          font-size: 0.9rem;
+      }
+      
+    .trending-movie-info p {
+          font-size: 0.8rem;
+      }
+
+    .load-more {
+          margin: 2rem 0;
+    }
+
+    .load-more button {
+        padding: 0.75rem 2rem;
+          border-radius: 25px;
+          font-size: 1rem;
+    }
+
     .movie-detail-hero {
-      height: 30vh; /* Further reduced height on very small screens */
+          height: 60vh;
     }
-  
+      
+    .movie-detail-tabs {
+          gap: 1rem;
+        margin: 2rem 0;
+        padding: 0 2rem;
+    }
+          
+    .movie-detail-tabs button {
+        padding: 1rem;
+          font-size: 1rem;
+    }
+
+    .tab-content {
+          padding: 2rem;
+      }
+      
+      .cast-tab {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+
+    .cast-member img {
+        width: 150px;
+        height: 225px;
+    }
+
+    .reviews-tab {
+          gap: 2rem;
+    }
+          
+    .review {
+        padding: 1rem;
+          border-radius: 10px;
+          font-size: 1rem;
+    }
+        
+    .review-header h3 {
+            font-size: 1.1rem;
+    }
+    
+    .similar-tab {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+          
+    .similar-movie img {
+        height: 300px;
+    }
+
     .trailer-content {
-      padding-bottom: 56.25%;
+          width: 80%;
+          padding-bottom: 45%;
     }
+
+      .upcoming-section {
+        margin: 2rem 0;
+          padding: 1rem;
+    }
+          
+      .upcoming-movies {
+        gap: 1rem;
+          padding: 1rem 0;
+    }
+          
+      .upcoming-movie {
+        width: 200px;
+      }
+      
+      .upcoming-date {
+          padding: 0.5rem;
+        border-radius: 5px;
+          font-size: 0.8rem;
+      }
   }
