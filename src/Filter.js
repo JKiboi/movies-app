@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Filter = ({ setActiveGenre, activeGenre, setFiltered, popular }) => {
+const Filter = ({ setActiveGenre, activeGenre, setFiltered, popular, releaseYearFilter, setReleaseYearFilter, minRatingFilter, setMinRatingFilter }) => {
   const genres = [
     { id: 0, name: 'All' },
     { id: 16, name: 'Animation' },
@@ -13,16 +13,13 @@ const Filter = ({ setActiveGenre, activeGenre, setFiltered, popular }) => {
     { id: 36, name: 'History' }
   ];
 
-  React.useEffect(() => {
-    if (activeGenre === 0) {
-      setFiltered(popular);
-      return;
+  const handleYearChange = (e) => {
+    setReleaseYearFilter(e.target.value);
+  };
+    
+    const handleRatingChange = (e) =>{
+      setMinRatingFilter(e.target.value)
     }
-    const filtered = popular.filter(movie => 
-      movie.genre_ids.includes(activeGenre)
-    );
-    setFiltered(filtered);
-  }, [activeGenre, popular, setFiltered]);
 
   return (
     <div className="filter-section">
@@ -38,7 +35,27 @@ const Filter = ({ setActiveGenre, activeGenre, setFiltered, popular }) => {
             {genre.name}
           </motion.button>
         ))}
+          
       </div>
+        <div className="filter-inputs">
+            <input
+              type="number"
+              placeholder="Release Year"
+              value={releaseYearFilter}
+              onChange={handleYearChange}
+              className="filter-input"
+          />
+          <input
+            type="number"
+            placeholder="Min Rating"
+            value={minRatingFilter}
+            onChange={handleRatingChange}
+            className="filter-input"
+            min="0"
+            max="10"
+            step="0.1"
+           />
+        </div>
     </div>
   );
 };

@@ -144,11 +144,28 @@
   }
   
   .filter-container {
-    display: flex;
+      display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
+  }
+    
+  .filter-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+    
+  .filter-input {
+      padding: 0.75rem 1rem;
+      border-radius: 25px;
+      background: var(--card-background);
+      color: var(--text-color);
+      border:none;
+      font-size: 1rem;
+      max-width: 150px;
   }
   
   .filter-container button {
@@ -339,5 +356,236 @@
     
     .trending-movie {
       width: 120px;
+    }
+  }
+
+  .movie-detail-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .modal-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--background-color);
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .movie-detail-hero {
+    height: 60vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  .movie-detail-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  }
+  
+  .hero-content {
+    padding: 2rem;
+    position: relative;
+    width: 100%;
+  }
+  
+  .play-trailer {
+    background: var(--secondary-color);
+    border: none;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .movie-detail-tabs {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 2rem;
+  }
+  
+  .movie-detail-tabs button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    padding: 1rem;
+    cursor: pointer;
+    opacity: 0.7;
+    position: relative;
+  }
+  
+  .movie-detail-tabs button.active {
+    opacity: 1;
+  }
+  
+  .movie-detail-tabs button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--secondary-color);
+  }
+  
+  .tab-content {
+    padding: 2rem;
+  }
+  
+  .cast-tab {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .cast-member {
+    text-align: center;
+  }
+  
+  .cast-member img {
+    width: 150px;
+    height: 225px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .reviews-tab {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .review {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 10px;
+  }
+  
+  .similar-tab {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .similar-movie {
+    cursor: pointer;
+  }
+  
+  .similar-movie img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .trailer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+  }
+  
+  .trailer-content {
+    width: 80%;
+    height: 0;
+    padding-bottom: 45%;
+    position: relative;
+  }
+  
+  .trailer-content iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+    .upcoming-section {
+    margin: 2rem 0;
+    padding: 1rem;
+  }
+  
+  .upcoming-movies {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+  }
+  
+  .upcoming-movie {
+    flex: 0 0 auto;
+    width: 200px;
+    position: relative;
+  }
+  
+  .upcoming-date {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 768px) {
+    .movie-detail-hero {
+      height: 40vh;
+    }
+  
+    .movie-detail-tabs {
+      overflow-x: auto;
+      padding: 0 1rem;
+    }
+  
+    .tab-content {
+      padding: 1rem;
+    }
+  
+    .cast-tab {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+  
+    .trailer-content {
+      width: 95%;
+      padding-bottom: 53.4375%;
     }
   }

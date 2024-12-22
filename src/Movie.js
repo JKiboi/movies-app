@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaStar, FaExpand } from 'react-icons/fa';
 
-const Movie = ({ movie }) => {
+const Movie = ({ movie, onMovieClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -13,6 +13,7 @@ const Movie = ({ movie }) => {
       exit={{ opacity: 0 }}
       className="movie-card"
       whileHover={{ y: -10 }}
+      onClick={() => onMovieClick(movie.id)}
     >
       <div className="movie-image-container">
         <img
