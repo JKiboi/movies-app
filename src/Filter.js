@@ -1,34 +1,46 @@
-import React, { useEffect } from 'react'
+import React from 'react';
+import { motion } from 'framer-motion';
 
+const Filter = ({ setActiveGenre, activeGenre, setFiltered, popular }) => {
+  const genres = [
+    { id: 0, name: 'All' },
+    { id: 16, name: 'Animation' },
+    { id: 80, name: 'Crime' },
+    { id: 35, name: 'Comedy' },
+    { id: 18, name: 'Drama' },
+    { id: 12, name: 'Adventure' },
+    { id: 99, name: 'Documentary' },
+    { id: 36, name: 'History' }
+  ];
 
-const Filter = ({popular,setFiltered,activeGenre,setActiveGenre}) => {
-
-    useEffect(()=>{
-       if(activeGenre===0){
-        setFiltered(popular)
-        return;
-       }
-       const filtered=popular.filter(movie=>movie.genre_ids.includes(activeGenre)
-       )
-       setFiltered(filtered)
-
-    },[activeGenre])
+  React.useEffect(() => {
+    if (activeGenre === 0) {
+      setFiltered(popular);
+      return;
+    }
+    const filtered = popular.filter(movie => 
+      movie.genre_ids.includes(activeGenre)
+    );
+    setFiltered(filtered);
+  }, [activeGenre, popular, setFiltered]);
 
   return (
-    <div className='container'>
-      <div className='filter-container'>
-        <button className={activeGenre===0?"active":""} onClick={()=>setActiveGenre(0)}>All</button>
-        <button className={activeGenre===16?"active":""}  onClick={()=>setActiveGenre(16)}>Animation</button>
-        <button className={activeGenre===80?"active":""} onClick={()=>setActiveGenre(80)}>Crime</button>
-        <button className={activeGenre===35?"active":""} onClick={()=>setActiveGenre(35)}>Comedy</button>
-        <button className={activeGenre===18?"active":""} onClick={()=>setActiveGenre(18)}>Drama</button>
-        <button className={activeGenre===12?"active":""} onClick={()=>setActiveGenre(12)}>Adventure</button>
-        <button className={activeGenre===99?"active":""} onClick={()=>setActiveGenre(99)}>Docu</button>
-        <button className={activeGenre===36?"active":""} onClick={()=>setActiveGenre(36)}>History</button>
-      
+    <div className="filter-section">
+      <div className="filter-container">
+        {genres.map(genre => (
+          <motion.button
+            key={genre.id}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={activeGenre === genre.id ? 'active' : ''}
+            onClick={() => setActiveGenre(genre.id)}
+          >
+            {genre.name}
+          </motion.button>
+        ))}
+      </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default Filter
+export default Filter;
