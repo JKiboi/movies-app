@@ -160,7 +160,7 @@ function App() {
                         <Movie key={content.id} movie={content} onMovieClick={handleMovieClick} isTvShows={isTvShows} />
                       ))
                     ) : (
-                      <p className="no-results">No results found for the selected criteria.</p>
+                      <p className="no-results">No Movies found for the selected genre!</p>
                   )}
                 </motion.div>
             </AnimatePresence>
