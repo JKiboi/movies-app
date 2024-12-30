@@ -43,7 +43,7 @@ const SearchBar = ({ setSearchResults, setIsSearching }) => {
       <FaSearch className="search-icon" />
       <input
         type="text"
-        placeholder="Search for movies..."
+        placeholder="Search for content..."
         value={searchTerm}
         onChange={handleSearch}
         className="search-input"

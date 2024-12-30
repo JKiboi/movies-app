@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Filter = ({ setActiveGenre, activeGenre, setFiltered, popular, releaseYearFilter, setReleaseYearFilter, minRatingFilter, setMinRatingFilter }) => {
+const Filter = ({ setActiveGenre, activeGenre, setFiltered, popular, releaseYearFilter, setReleaseYearFilter, minRatingFilter, setMinRatingFilter, isTvShows }) => {
   const genres = [
     { id: 0, name: 'All' },
     { id: 16, name: 'Animation' },
@@ -10,12 +10,38 @@ const Filter = ({ setActiveGenre, activeGenre, setFiltered, popular, releaseYear
     { id: 18, name: 'Drama' },
     { id: 12, name: 'Adventure' },
     { id: 99, name: 'Documentary' },
-    { id: 36, name: 'History' }
+    { id: 36, name: 'History' },
+      { id: 10759, name: 'Action & Adventure' },
+      { id: 10762, name: 'Kids' },
+      { id: 10763, name: 'News' },
+      { id: 10764, name: 'Reality' },
+      { id: 10765, name: 'Sci-Fi & Fantasy' },
+      { id: 10766, name: 'Soap' },
+      { id: 10767, name: 'Talk' },
+      { id: 10768, name: 'War & Politics' }
   ];
 
-  const handleYearChange = (e) => {
-    setReleaseYearFilter(e.target.value);
-  };
+    const tvGenres = [
+        { id: 0, name: 'All' },
+        {id: 10759, name: 'Action & Adventure'},
+        {id: 16, name: 'Animation'},
+        {id: 35, name: 'Comedy'},
+        {id: 80, name: 'Crime'},
+        {id: 99, name: 'Documentary'},
+        {id: 18, name: 'Drama'},
+        {id: 10762, name: 'Kids'},
+        {id: 10763, name: 'News'},
+        {id: 10764, name: 'Reality'},
+        {id: 10765, name: 'Sci-Fi & Fantasy'},
+        {id: 10766, name: 'Soap'},
+        {id: 10767, name: 'Talk'},
+        {id: 10768, name: 'War & Politics'},
+    ]
+
+
+    const handleYearChange = (e) => {
+        setReleaseYearFilter(e.target.value);
+      };
     
     const handleRatingChange = (e) =>{
       setMinRatingFilter(e.target.value)
@@ -24,7 +50,7 @@ const Filter = ({ setActiveGenre, activeGenre, setFiltered, popular, releaseYear
   return (
     <div className="filter-section">
       <div className="filter-container">
-        {genres.map(genre => (
+          {(isTvShows ? tvGenres : genres).map(genre => (
           <motion.button
             key={genre.id}
             whileHover={{ scale: 1.05 }}

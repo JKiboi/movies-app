@@ -21,50 +21,62 @@ function App() {
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [releaseYearFilter, setReleaseYearFilter] = useState('');
     const [minRatingFilter, setMinRatingFilter] = useState('');
+    const [isTvShows, setIsTvShows] = useState(false);
+
 
     useEffect(() => {
         fetchPopular();
-    }, [currentPage]);
+    }, [currentPage, isTvShows]);
 
     const fetchPopular = async () => {
         try {
             setLoading(true);
-            const data = await fetch(
-                `https://api.themoviedb.org/3/movie/popular?api_key=adf81d2fbdf4fb5f54e9b8180d4e2bed&language=en-US&page=${currentPage}`
-            );
-            const movies = await data.json();
-            setPopular(movies.results);
-            setFiltered(movies.results);
-            setTotalPages(movies.total_pages);
+             const baseUrl = isTvShows
+            ? `https://api.themoviedb.org/3/tv/popular?api_key=adf81d2fbdf4fb5f54e9b8180d4e2bed&language=en-US&page=${currentPage}`
+            :`https://api.themoviedb.org/3/movie/popular?api_key=adf81d2fbdf4fb5f54e9b8180d4e2bed&language=en-US&page=${currentPage}`;
+        
+            const data = await fetch(baseUrl);
+            const response = await data.json();
+          
+          
+            setPopular(response.results);
+            setFiltered(response.results);
+            setTotalPages(response.total_pages);
+             setError(null); // Clear any previous errors
         } catch (err) {
-            setError('Failed to fetch movies. Please try again later.');
+            setError('Failed to fetch content. Please try again later.');
         } finally {
             setLoading(false);
         }
     };
 
+
     useEffect(() => {
-      let filteredMovies = [...popular];
-  
-      if (activeGenre !== 0) {
-        filteredMovies = filteredMovies.filter(movie =>
-          movie.genre_ids.includes(activeGenre)
-        );
-      }
-  
-      if (releaseYearFilter) {
-        filteredMovies = filteredMovies.filter(movie =>
-          new Date(movie.release_date).getFullYear().toString() === releaseYearFilter
-        );
-      }
-      if(minRatingFilter){
-        filteredMovies = filteredMovies.filter(movie =>
-          movie.vote_average >= parseFloat(minRatingFilter)
-        );
-      }
-  
-      setFiltered(filteredMovies);
-    }, [popular, activeGenre, releaseYearFilter, minRatingFilter]);
+        let filteredContent = [...popular];
+    
+          if (activeGenre !== 0) {
+              if(isTvShows){
+                  filteredContent = filteredContent.filter(show => show.genre_ids.includes(activeGenre));
+              }else{
+            filteredContent = filteredContent.filter(movie =>
+              movie.genre_ids.includes(activeGenre)
+              );
+            }
+          }
+        if (releaseYearFilter) {
+          filteredContent = filteredContent.filter(content =>
+            new Date(isTvShows ? content.first_air_date : content.release_date).getFullYear().toString() === releaseYearFilter
+          );
+        }
+        if (minRatingFilter) {
+          filteredContent = filteredContent.filter(content =>
+            content.vote_average >= parseFloat(minRatingFilter)
+          );
+        }
+    
+        setFiltered(filteredContent);
+    }, [popular, activeGenre, releaseYearFilter, minRatingFilter, isTvShows]);
+
 
     const handleMovieClick = (movieId) => {
         setSelectedMovieId(movieId);
@@ -74,11 +86,10 @@ function App() {
         setSelectedMovieId(null);
     };
 
-
     const goToPreviousPage = () => {
         if (currentPage > 1) {
           setCurrentPage(prev => prev - 1);
-      }
+        }
     };
 
     const goToNextPage = () => {
@@ -87,12 +98,20 @@ function App() {
         }
     };
 
+  const handleMediaTypeChange = (type) => {
+      setIsTvShows(type === 'tv');
+      setActiveGenre(0);
+      setCurrentPage(1);
+      setReleaseYearFilter('');
+      setMinRatingFilter('');
+  }
+
 
     return (
         <div className="app">
             <header className="header">
                 <h1>C-NEMA</h1>
-                <p>Discover your next favorite movie</p>
+                <p>Discover your next favorite content</p>
             </header>
 
             <SearchBar
@@ -104,6 +123,21 @@ function App() {
 
             {!isSearching && <UpcomingMovies />}
 
+        <div className="media-type-toggle">
+          <button
+            className={!isTvShows ? 'active' : ''}
+            onClick={() => handleMediaTypeChange('movie')}
+          >
+            Movies
+          </button>
+          <button
+            className={isTvShows ? 'active' : ''}
+            onClick={() => handleMediaTypeChange('tv')}
+          >
+            TV Shows
+          </button>
+        </div>
+
             <Filter
                 popular={popular}
                 setFiltered={setFiltered}
@@ -113,18 +147,26 @@ function App() {
                 setReleaseYearFilter={setReleaseYearFilter}
                 minRatingFilter={minRatingFilter}
                 setMinRatingFilter={setMinRatingFilter}
+                isTvShows={isTvShows}
             />
+ 
+             {error && <p className="error">{error}</p>}
 
             <AnimatePresence>
                 <motion.div layout className="movies-grid">
-                    {(isSearching ? searchResults : filtered).map(movie => (
-                        <Movie key={movie.id} movie={movie} onMovieClick={handleMovieClick} />
-                    ))}
+                  {
+                    filtered.length > 0 ? (
+                      (isSearching ? searchResults : filtered).map(content => (
+                        <Movie key={content.id} movie={content} onMovieClick={handleMovieClick} isTvShows={isTvShows} />
+                      ))
+                    ) : (
+                      <p className="no-results">No results found for the selected criteria.</p>
+                  )}
                 </motion.div>
             </AnimatePresence>
             
             {selectedMovieId && (
-                <MovieDetail movieId={selectedMovieId} onClose={handleCloseModal} />
+                <MovieDetail movieId={selectedMovieId} onClose={handleCloseModal} isTvShows={isTvShows}/>
             )}
 
           {!isSearching && (

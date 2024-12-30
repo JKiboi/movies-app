@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaStar, FaPlay, FaTimes } from 'react-icons/fa';
 
-const MovieDetail = ({ movieId, onClose }) => {
+const MovieDetail = ({ movieId, onClose, isTvShows }) => {
   const [movieDetails, setMovieDetails] = useState(null);
   const [cast, setCast] = useState([]);
   const [similar, setSimilar] = useState([]);
@@ -11,30 +11,36 @@ const MovieDetail = ({ movieId, onClose }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [showTrailer, setShowTrailer] = useState(false);
 
+    const baseUrl = isTvShows
+        ? `https://api.themoviedb.org/3/tv/${movieId}?api_key=adf81d2fbdf4fb5f54e9b8180d4e2bed&append_to_response=credits,similar,videos,reviews`
+        : `https://api.themoviedb.org/3/movie/${movieId}?api_key=adf81d2fbdf4fb5f54e9b8180d4e2bed&append_to_response=credits,similar,videos,reviews`
+
+
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
         // Fetch movie details
-        const detailsResponse = await fetch(
-          `https://api.themoviedb.org/3/movie/${movieId}?api_key=adf81d2fbdf4fb5f54e9b8180d4e2bed&append_to_response=credits,similar,videos,reviews`
-        );
+        const detailsResponse = await fetch(baseUrl);
         const data = await detailsResponse.json();
         setMovieDetails(data);
-        setCast(data.credits.cast.slice(0, 10));
+          setCast(data.credits.cast.slice(0, 10));
         setSimilar(data.similar.results.slice(0, 6));
-        setVideos(data.videos.results.filter(video => video.type === "Trailer"));
-        setReviews(data.reviews.results);
+        setVideos(data.videos.results.filter(video => video.type === "Trailer" || video.type === "Teaser"));
+          setReviews(data.reviews.results);
       } catch (error) {
         console.error('Error fetching movie details:', error);
       }
     };
 
     fetchMovieDetails();
-  }, [movieId]);
+  }, [movieId, isTvShows, baseUrl]);
 
-  if (!movieDetails) return <div className="loader">Loading...</div>;
+    if (!movieDetails) return <div className="loader">Loading...</div>;
 
-  const mainTrailer = videos[0];
+    const mainTrailer = videos[0];
+    const title = isTvShows ? movieDetails.name : movieDetails.title;
+    const releaseDate = isTvShows ? movieDetails.first_air_date : movieDetails.release_date;
+    const runtime = isTvShows ? null : movieDetails.runtime;
 
   return (
     <motion.div 
@@ -52,7 +58,7 @@ const MovieDetail = ({ movieId, onClose }) => {
           backgroundImage: `url(https://image.tmdb.org/t/p/original${movieDetails.backdrop_path})`
         }}>
           <div className="hero-content">
-            <h1>{movieDetails.title}</h1>
+            <h1>{title}</h1>
             {mainTrailer && (
               <button 
                 className="play-trailer"
@@ -70,11 +76,13 @@ const MovieDetail = ({ movieId, onClose }) => {
               <FaStar /> {movieDetails.vote_average.toFixed(1)}
             </span>
             <span className="release-date">
-              {new Date(movieDetails.release_date).getFullYear()}
+              {new Date(releaseDate).getFullYear()}
             </span>
-            <span className="runtime">
-              {Math.floor(movieDetails.runtime / 60)}h {movieDetails.runtime % 60}m
-            </span>
+            {runtime && (
+                <span className="runtime">
+                    {Math.floor(runtime / 60)}h {runtime % 60}m
+                </span>
+            )}
           </div>
 
           <div className="movie-detail-tabs">
@@ -100,7 +108,7 @@ const MovieDetail = ({ movieId, onClose }) => {
               className={activeTab === 'similar' ? 'active' : ''}
               onClick={() => setActiveTab('similar')}
             >
-              Similar Movies
+              Similar Content
             </button>
           </div>
 
@@ -158,22 +166,22 @@ const MovieDetail = ({ movieId, onClose }) => {
 
             {activeTab === 'similar' && (
               <div className="similar-tab">
-                {similar.map(movie => (
+                {similar.map(content => (
                   <div 
-                    key={movie.id} 
+                    key={content.id} 
                     className="similar-movie"
                     onClick={() => {
-                      setMovieDetails(null);
-                      movieId = movie.id;
+                        setMovieDetails(null);
+                        movieId = content.id;
                     }}
                   >
                     <img 
-                      src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                      alt={movie.title}
+                        src={`https://image.tmdb.org/t/p/w200${content.poster_path || content.backdrop_path}`}
+                      alt={content.title || content.name}
                     />
-                    <h3>{movie.title}</h3>
+                    <h3>{content.title || content.name}</h3>
                     <span className="similar-rating">
-                      <FaStar /> {movie.vote_average.toFixed(1)}
+                      <FaStar /> {content.vote_average.toFixed(1)}
                     </span>
                   </div>
                 ))}

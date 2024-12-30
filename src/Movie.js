@@ -2,8 +2,17 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaStar, FaExpand } from 'react-icons/fa';
 
-const Movie = ({ movie, onMovieClick }) => {
+const Movie = ({ movie, onMovieClick, isTvShows }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+    const imageUrl = movie.backdrop_path
+        ? `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
+        : movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x281?text=No+Image'
+    const title = isTvShows ? movie.name : movie.title;
+    const rating = movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A';
+    const overview = movie.overview ? movie.overview : 'No overview available';
+    const releaseDate = isTvShows ? movie.first_air_date : movie.release_date;
+    const popularity = Math.round(movie.popularity);
+
 
   return (
     <motion.div 
@@ -17,8 +26,8 @@ const Movie = ({ movie, onMovieClick }) => {
     >
       <div className="movie-image-container">
         <img
-          src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-          alt={movie.title}
+          src={imageUrl}
+          alt={title}
           className="movie-image"
         />
         <div className="movie-overlay">
@@ -32,10 +41,10 @@ const Movie = ({ movie, onMovieClick }) => {
       </div>
 
       <div className="movie-info">
-        <h2>{movie.title}</h2>
+        <h2>{title}</h2>
         <div className="rating">
           <FaStar className="star-icon" />
-          <span>{movie.vote_average.toFixed(1)}</span>
+          <span>{rating}</span>
         </div>
       </div>
 
@@ -46,10 +55,10 @@ const Movie = ({ movie, onMovieClick }) => {
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
         >
-          <p>{movie.overview}</p>
+          <p>{overview}</p>
           <div className="additional-info">
-            <span>Release: {movie.release_date}</span>
-            <span>Popularity: {Math.round(movie.popularity)}</span>
+            <span>Release: {releaseDate}</span>
+            <span>Popularity: {popularity}</span>
           </div>
         </motion.div>
       )}
